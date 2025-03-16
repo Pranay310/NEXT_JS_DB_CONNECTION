@@ -125,6 +125,56 @@ export async function GET() {
   return NextResponse.json({ dbData: data }); // Return the data as a JSON response
 }
 ```
+## Fetching and Displaying Products (`app/products/page.js`)
+
+### Purpose
+This component fetches product data from the API and displays it on the frontend.
+
+### Code Breakdown
+```js
+const page = async () => {
+  async function fetchApi() {
+    let product = await fetch("http://localhost:3001/api/fetchProducts", {
+      method: "GET",
+    });
+    product = await product.json();
+    product = product.dbData;
+    console.log(product);
+
+    console.log(typeof product);
+
+    return product;
+  }
+  const data = await fetchApi();
+
+  return (
+    <div>
+      {data.map((pro) => (
+        <>
+          <h1>{pro.item}</h1> {/* Incorrect: should be 'pro.product' */}
+          <h1>{pro.price}</h1>
+        </>
+      ))}
+    </div>
+  );
+};
+
+export default page;
+```
+
+### Explanation
+- **`fetchApi` Function**: Fetches product data from the backend API.
+- **`await fetch()`**: Sends a GET request to retrieve data from `fetchProducts` API.
+- **`.json()`**: Converts the API response to JSON.
+- **`product.dbData`**: Extracts the actual product data from the response.
+- **`console.log(typeof product)`**: Logs the data type for debugging.
+- **`.map((pro) => ( ... ))`**: Iterates over the fetched products and displays them.
+
+### Issue Fix
+- The code references `pro.item`, but in our schema, the correct field is `pro.product`. The corrected code should be:
+  ```js
+  <h1>{pro.product}</h1>
+  ```
 
 ## Conclusion
 
