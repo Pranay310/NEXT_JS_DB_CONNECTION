@@ -193,5 +193,3 @@ export default page;
 This project demonstrates how to set up MongoDB connectivity in a Next.js application. You can extend it further by adding CRUD operations, authentication, and improved error handling.
 
 ---
-
-If you have any issues, feel free to raise them in the repository!
